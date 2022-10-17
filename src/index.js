@@ -24,7 +24,7 @@ function getConfig(dictionary, key) {
 }
 
 async function postToWebhook(webhookUrl, risingCloudKey, key) {
-  console.log(`Posting to ${webhookUrl}`);
+  console.log(`Posting ${key} to ${webhookUrl}`);
   return fetch(
       webhookUrl,
       {
@@ -47,15 +47,29 @@ async function postToWebhook(webhookUrl, risingCloudKey, key) {
   });
 }
 
+async function getObject(requestPath, origin, backend, method) {
+  const url = new URL(requestPath, origin).toString();
+  console.log(`Attempting to ${method} ${url}`);
+  let response = await fetch(url, {
+    backend: backend,
+    method: method
+  });
+  console.log(`Status from ${backend} is ${response.status}, cache ${response.headers.get('X-Cache')}`);
+  return response;
+}
+
 async function handleRequest(event) {
   // Get the client request.
-  let req = event.request;
+  const req = event.request;
 
   // Filter requests that have unexpected methods.
   if (!["HEAD", "GET"].includes(req.method)) {
-    return new Response("This method is not allowed", {
-      status: 405,
-    });
+    return new Response("This method is not allowed", {status: 405});
+  }
+
+  // Ignore noise from favicon requests
+  if (req.url.endsWith('/favicon.ico')) {
+    return new Response(null,  { status: 404 });
   }
 
   // Get the config
@@ -67,34 +81,30 @@ async function handleRequest(event) {
 
   const requestPath = new URL(req.url).pathname;
 
-  // Try to get the object from the new backend
-  let url = new URL(requestPath, newOrigin).toString();
-  console.log(`Attempting to ${req.method} ${url}`);
-  let response = await fetch(url, {
-    backend: newBackend,
-    method: req.method
-  });
-  console.log(`Status from new backend is ${response.status}`);
+  const noCopy = req.headers.get('X-No-Copy');
+  const requestFromTask = (noCopy && noCopy.toString() === "1");
+  let response;
 
-  // Is the object there?
-  if (response.status === 404) {
-    // Not found in the new backend - get the object from the old backend
-    url = new URL(requestPath, oldOrigin).toString();
-    console.log(`Attempting to ${req.method} ${url}`);
-    response = await fetch(new URL(requestPath, oldOrigin).toString(), {
-      backend: oldBackend,
-      method: req.method
-    });
-    console.log(`Status from old backend is ${response.status}`);
+  if (!requestFromTask) {
+    // It's not a request from the task - try to get the object from the new backend
+    response = await getObject(requestPath, newOrigin, newBackend, req.method);
+  }
 
-    // Object key is the path minus the initial '/'
-    const key = requestPath.substring(1);
-    console.log(`Key is ${key}`);
+  if (requestFromTask || response.status === 404) {
+    // The request came from the task, or the object was not found in the new backend
+    // Get the object from the old backend
+    response = await getObject(requestPath, oldOrigin, oldBackend, req.method);
 
-    // Notify webhook that the object should be copied to the new backend.
-    // waitUntil() will perform the fetch after the response is returned
-    // to the client.
-    event.waitUntil(postToWebhook(webhookUrl, risingCloudKey, key));
+    // If we found an object, and the request wasn't from the task, post a notification to the task
+    if (response.ok && !requestFromTask) {
+      // Object key is the path minus the initial '/'
+      const key = requestPath.substring(1);
+
+      // Notify webhook that the object should be copied to the new backend.
+      // waitUntil() will perform the fetch after the response is returned
+      // to the client.
+      event.waitUntil(postToWebhook(webhookUrl, risingCloudKey, key));
+    }
   }
 
   // Return the response to the client

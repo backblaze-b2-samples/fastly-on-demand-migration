@@ -1,15 +1,15 @@
 {
     "name": "fastly-on-demand-migration",
-    "version": "0.3.0",
+    "version": "1.0.0",
     "lockfileVersion": 2,
     "requires": true,
     "packages": {
         "": {
             "name": "fastly-on-demand-migration",
-            "version": "0.3.0",
+            "version": "1.0.0",
             "license": "MIT",
             "dependencies": {
-                "@fastly/js-compute": "^0.5.4"
+                "@fastly/js-compute": "0.5.4"
             },
             "devDependencies": {
                 "core-js": "^3.19.1",
@@ -871,9 +871,9 @@
             "integrity": "sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow=="
         },
         "node_modules/marked": {
-            "version": "4.1.0",
-            "resolved": "https://registry.npmjs.org/marked/-/marked-4.1.0.tgz",
-            "integrity": "sha512-+Z6KDjSPa6/723PQYyc1axYZpYYpDnECDaU6hkaf5gqBieBkMKYReL5hteF2QizhlMbgbo8umXl/clZ67+GlsA==",
+            "version": "4.1.1",
+            "resolved": "https://registry.npmjs.org/marked/-/marked-4.1.1.tgz",
+            "integrity": "sha512-0cNMnTcUJPxbA6uWmCmjWz4NJRe/0Xfk2NhXCUHjew9qJzFN20krFnsUe7QynwqOwa5m1fZ4UDg0ycKFVC0ccw==",
             "bin": {
                 "marked": "bin/marked.js"
             },
@@ -920,9 +920,12 @@
             }
         },
         "node_modules/minimist": {
-            "version": "1.2.6",
-            "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.6.tgz",
-            "integrity": "sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q=="
+            "version": "1.2.7",
+            "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.7.tgz",
+            "integrity": "sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==",
+            "funding": {
+                "url": "https://github.com/sponsors/ljharb"
+            }
         },
         "node_modules/neo-async": {
             "version": "2.6.2",
@@ -1359,9 +1362,9 @@
             }
         },
         "node_modules/uglify-js": {
-            "version": "3.17.0",
-            "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.17.0.tgz",
-            "integrity": "sha512-aTeNPVmgIMPpm1cxXr2Q/nEbvkmV8yq66F3om7X3P/cvOXQ0TMQ64Wk63iyT1gPlmdmGzjGpyLh1f3y8MZWXGg==",
+            "version": "3.17.3",
+            "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.17.3.tgz",
+            "integrity": "sha512-JmMFDME3iufZnBpyKL+uS78LRiC+mK55zWfM5f/pWBJfpOttXAqYfdDGRukYhJuyRinvPVAtUhvy7rlDybNtFg==",
             "optional": true,
             "bin": {
                 "uglifyjs": "bin/uglifyjs"
@@ -2268,9 +2271,9 @@
             "integrity": "sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow=="
         },
         "marked": {
-            "version": "4.1.0",
-            "resolved": "https://registry.npmjs.org/marked/-/marked-4.1.0.tgz",
-            "integrity": "sha512-+Z6KDjSPa6/723PQYyc1axYZpYYpDnECDaU6hkaf5gqBieBkMKYReL5hteF2QizhlMbgbo8umXl/clZ67+GlsA=="
+            "version": "4.1.1",
+            "resolved": "https://registry.npmjs.org/marked/-/marked-4.1.1.tgz",
+            "integrity": "sha512-0cNMnTcUJPxbA6uWmCmjWz4NJRe/0Xfk2NhXCUHjew9qJzFN20krFnsUe7QynwqOwa5m1fZ4UDg0ycKFVC0ccw=="
         },
         "merge-stream": {
             "version": "2.0.0",
@@ -2302,9 +2305,9 @@
             }
         },
         "minimist": {
-            "version": "1.2.6",
-            "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.6.tgz",
-            "integrity": "sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q=="
+            "version": "1.2.7",
+            "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.7.tgz",
+            "integrity": "sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g=="
         },
         "neo-async": {
             "version": "2.6.2",
@@ -2599,9 +2602,9 @@
             "peer": true
         },
         "uglify-js": {
-            "version": "3.17.0",
-            "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.17.0.tgz",
-            "integrity": "sha512-aTeNPVmgIMPpm1cxXr2Q/nEbvkmV8yq66F3om7X3P/cvOXQ0TMQ64Wk63iyT1gPlmdmGzjGpyLh1f3y8MZWXGg==",
+            "version": "3.17.3",
+            "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.17.3.tgz",
+            "integrity": "sha512-JmMFDME3iufZnBpyKL+uS78LRiC+mK55zWfM5f/pWBJfpOttXAqYfdDGRukYhJuyRinvPVAtUhvy7rlDybNtFg==",
             "optional": true
         },
         "update-browserslist-db": {
