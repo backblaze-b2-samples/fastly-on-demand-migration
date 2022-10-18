@@ -47,9 +47,8 @@ async function postToWebhook(webhookUrl, risingCloudKey, key) {
   });
 }
 
-async function getObject(requestPath, origin, backend, method) {
-  const url = new URL(requestPath, origin).toString();
-  console.log(`Attempting to ${method} ${url}`);
+async function getObject(url, backend, method) {
+  console.log(`Attempting to ${method} ${url} from ${backend}`);
   let response = await fetch(url, {
     backend: backend,
     method: method
@@ -59,7 +58,6 @@ async function getObject(requestPath, origin, backend, method) {
 }
 
 async function handleRequest(event) {
-  // Get the client request.
   const req = event.request;
 
   // Filter requests that have unexpected methods.
@@ -74,12 +72,8 @@ async function handleRequest(event) {
 
   // Get the config
   const config = new ConfigStore("config");
-  const oldOrigin = getConfig(config, "old_origin");
-  const newOrigin = getConfig(config, "new_origin");
   const webhookUrl = getConfig(config, "webhook_url");
   const risingCloudKey = getConfig(config, "rising_cloud_key")
-
-  const requestPath = new URL(req.url).pathname;
 
   const noCopy = req.headers.get('X-No-Copy');
   const requestFromTask = (noCopy && noCopy.toString() === "1");
@@ -87,17 +81,18 @@ async function handleRequest(event) {
 
   if (!requestFromTask) {
     // It's not a request from the task - try to get the object from the new backend
-    response = await getObject(requestPath, newOrigin, newBackend, req.method);
+    response = await getObject(req.url, newBackend, req.method);
   }
 
   if (requestFromTask || response.status === 404) {
     // The request came from the task, or the object was not found in the new backend
     // Get the object from the old backend
-    response = await getObject(requestPath, oldOrigin, oldBackend, req.method);
+    response = await getObject(req.url, oldBackend, req.method);
 
     // If we found an object, and the request wasn't from the task, post a notification to the task
     if (response.ok && !requestFromTask) {
       // Object key is the path minus the initial '/'
+      const requestPath = new URL(req.url).pathname;
       const key = requestPath.substring(1);
 
       // Notify webhook that the object should be copied to the new backend.

@@ -5,7 +5,7 @@
     },
     "version": "1.0.0",
     "dependencies": {
-        "@fastly/js-compute": "0.5.4"
+        "@fastly/js-compute": "^0.5.4"
     },
     "devDependencies": {
         "core-js": "^3.19.1",
