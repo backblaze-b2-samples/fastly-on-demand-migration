@@ -1,12 +1,5 @@
-# This file describes a Fastly Compute@Edge package. To learn more visit:
-# https://developer.fastly.com/reference/fastly-toml/
-
-authors = ["ppatterson@backblaze.com"]
-description = "A basic starter kit that demonstrates routing, simple synthetic responses and overriding caching rules."
-language = "javascript"
 manifest_version = 2
-name = "fastly-on-demand-migration"
-service_id = "1OAY3uVAncgeOekkWH3y01"
-
-[scripts]
-  build = "$(npm bin)/webpack && $(npm bin)/js-compute-runtime ./bin/index.js ./bin/main.wasm"
+name = "On Demand Migration with Backblaze B2 and Fastly"
+description = "Fastly Compute@Edge app demo for Tech Day 2022"
+authors = ["evangelism@backblaze.com"]
+language = "javascript"
