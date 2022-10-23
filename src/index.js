@@ -1,20 +1,13 @@
-//! Default Compute@Edge template program.
+//! Backblaze B2 Tech Day Demo: Compute@Edge app to migrate content on demand.
 
 /// <reference types="@fastly/js-compute" />
 
-// The entry point for your application.
-//
-// Use this fetch event listener to define your main request handling logic. It could be
-// used to route based on the request properties (such as method or path), send
-// the request to a backend, make completely new requests, and/or generate
-// synthetic responses.
-
+// These backends must be configured for the app
 const oldBackend = "old_backend";
 const newBackend = "new_backend";
 const webhookBackend = "webhook_backend";
 
-addEventListener("fetch", (event) => event.respondWith(handleRequest(event)));
-
+// Wrapper to throw an exception if a dictionary entry is not found
 function getConfig(dictionary, key) {
   const value = dictionary.get(key);
   if (!value) {
@@ -23,6 +16,7 @@ function getConfig(dictionary, key) {
   return value;
 }
 
+// Post an object key to the webhook
 async function postToWebhook(webhookUrl, risingCloudKey, key) {
   console.log(`Posting ${key} to ${webhookUrl}`);
   return fetch(
@@ -47,6 +41,7 @@ async function postToWebhook(webhookUrl, risingCloudKey, key) {
   });
 }
 
+// Wrapper for fetch to add some logging
 async function getObject(url, backend, method) {
   console.log(`Attempting to ${method} ${url} from ${backend}`);
   let response = await fetch(url, {
@@ -106,3 +101,5 @@ async function handleRequest(event) {
   console.log(`Returning response`);
   return response;
 }
+
+addEventListener("fetch", (event) => event.respondWith(handleRequest(event)));
